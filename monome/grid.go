@@ -24,8 +24,20 @@ type KeyEvent struct {
 	S int32
 }
 
+type TiltEvent struct {
+	N int32
+	X int32
+	Y int32
+	Z int32
+}
+
 func (c KeyEvent) Type() string   { return "Key" }
 func (c KeyEvent) String() string { return fmt.Sprintf("%s: %d, %d, %d", c.Type(), c.X, c.Y, c.S) }
+
+func (c TiltEvent) Type() string { return "Tilt" }
+func (c TiltEvent) String() string {
+	return fmt.Sprintf("%s: %d, %d, %d, %d", c.Type(), c.N, c.X, c.Y, c.Z)
+}
 
 type Grid struct {
 	bus    chan DeviceEvent
@@ -87,6 +99,14 @@ func NewGrid(deviceport int32) (*Grid, error) {
 		y := msg.Arguments[1].(int32)
 		s := msg.Arguments[2].(int32)
 		g.bus <- KeyEvent{x, y, s}
+	})
+
+	g.server.Handle(fmt.Sprintf("/%s/tilt", g.prefix), func(msg *osc.Message) {
+		n := msg.Arguments[0].(int32)
+		x := msg.Arguments[1].(int32)
+		y := msg.Arguments[2].(int32)
+		z := msg.Arguments[3].(int32)
+		g.bus <- TiltEvent{n, x, y, z}
 	})
 
 	return &g, err

@@ -35,6 +35,12 @@ func gridDemo(port int32) *monome.Grid {
 					if ke.S == int32(1) {
 						g.LedSet(ke.X, ke.Y, ke.S)
 					}
+				case monome.TiltEvent:
+					te := e.(monome.TiltEvent)
+					fmt.Println(te.N)
+					fmt.Println(te.X)
+					fmt.Println(te.Y)
+					fmt.Println(te.Z)
 				}
 			}(e)
 		}
