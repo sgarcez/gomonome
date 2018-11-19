@@ -37,10 +37,7 @@ func gridDemo(port int32) *monome.Grid {
 					}
 				case monome.TiltEvent:
 					te := e.(monome.TiltEvent)
-					fmt.Println(te.N)
-					fmt.Println(te.X)
-					fmt.Println(te.Y)
-					fmt.Println(te.Z)
+					fmt.Println(te)
 				}
 			}(e)
 		}

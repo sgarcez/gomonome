@@ -24,15 +24,15 @@ type KeyEvent struct {
 	S int32
 }
 
+func (c KeyEvent) Type() string   { return "Key" }
+func (c KeyEvent) String() string { return fmt.Sprintf("%s: %d, %d, %d", c.Type(), c.X, c.Y, c.S) }
+
 type TiltEvent struct {
 	N int32
 	X int32
 	Y int32
 	Z int32
 }
-
-func (c KeyEvent) Type() string   { return "Key" }
-func (c KeyEvent) String() string { return fmt.Sprintf("%s: %d, %d, %d", c.Type(), c.X, c.Y, c.S) }
 
 func (c TiltEvent) Type() string { return "Tilt" }
 func (c TiltEvent) String() string {
